@@ -33,7 +33,7 @@ sourceSets {
 jar.archiveName = "nrjavaserial-${props.'app.version'}.jar"
 
 task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper to the current directory.') {
-	gradleVersion = '2.7'
+	gradleVersion = '3.5'
 }
 
 repositories {
@@ -46,10 +46,12 @@ repositories {
 dependencies {
 	compile fileTree(dir: 'libs', includes: ['*.jar'])
 	testCompile 'junit:junit:4.12'
+	compile 'commons-net:commons-net:3.3'
+	compile 'net.java.dev.jna:jna:4.2.2'
+	compile 'net.java.dev.jna:jna-platform:4.2.2'
 }
 
 jar {
-	
 	jar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	manifest {
 		attributes(
@@ -61,6 +63,7 @@ jar {
 			"Implementation-Version" : props."app.version",
 			"Implementation-Vendor": "Neuron Robotics Cooperative",
 		)
+		instruction 'Import-Package', 'com.sun.jna.platform.win32;resolution:=optional,org.apache.commons.net.telnet;resolution:=optional,*'
 	}
 }
 
